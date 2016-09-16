@@ -17,17 +17,17 @@ var puppiesAPI = (function() {
       contentType: 'application/json',
       dataType: "json",
       success: function(puppy){
-        console.log(puppy);
+        // console.log(puppy);
         removeDogItem(puppy.id);
       },
       error: function(xhr, status, errorThrown){
-        console.log("Error: " + errorThrown);
-        console.log("Status: " + status);
-        console.log( xhr );
+        // console.log("Error: " + errorThrown);
+        // console.log("Status: " + status);
+        // console.log( xhr );
         $('body p').first().text('Error: ' + errorThrown);
       },
       complete: function(xhr, status){
-        console.log("donezo");
+        // console.log("donezo");
       }
     });
   };
@@ -49,18 +49,18 @@ var puppiesAPI = (function() {
       contentType: 'application/json',
       dataType: "json",
       success: function(puppy){
-        console.log(puppy);
+        // console.log(puppy);
         addDogItem(puppy);
       },
       error: function(xhr, status, errorThrown){
-        console.log("Error: " + errorThrown);
-        console.log("Status: " + status);
-        console.log( xhr );
+        // console.log("Error: " + errorThrown);
+        // console.log("Status: " + status);
+        // console.log( xhr );
         $('body').prepend('<p>' + 'Error: ' + errorThrown + '</p>');
         $('body p').addClass('error');
       },
       complete: function(xhr, status){
-        console.log("donezo");
+        // console.log("donezo");
       }
     });
   };
@@ -108,4 +108,24 @@ $(function() {
     puppiesAPI.adoptPuppy($target.data('id'));
   });
 
+  $(document).ajaxStart(function(){
+    var $progress = $('<div class="progress">').text("Waiting");
+    $('body').append($progress);
+    console.log("inside ajaxStart");
+    var checkProgress = setTimeout(checkProgress, 1000);
+  });
+
+  var checkProgress = function(){
+    console.log("inside caution");
+    var $prog = $('.progress');
+    if ($prog.length > 0){
+      $prog.text("Sorry this is taking so long...");
+    }
+  };
+
+  $(document).ajaxComplete(function() {
+    console.log("inside ajaxComplete");
+    var $fin = $('.progress').removeClass('progess').addClass('complete');
+    $fin.fadeOut(2000);
+  });
 });
