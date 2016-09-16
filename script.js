@@ -1,12 +1,11 @@
 
-
   var puppiesAPI = (function() {
 
     var _rootPath = "https://ajax-puppies.herokuapp.com/";
 
     var getCurrentPuppies = function(callbackFunction) {
-      var _breeds = _rootPath + "breeds.json";
-      $.getJSON(_breeds, function(data) {
+      var _breedsPath = _rootPath + "breeds.json";
+      $.getJSON(_breedsPath, function(data) {
         callbackFunction(data);
       });
     };
@@ -16,14 +15,12 @@
       var _$breed = $('input[name="breed"]').val();
       $.ajax({
         url: "https://ajax-puppies.herokuapp.com/puppies.json",
-        data: {
+        data: JSON.stringify({
           name: _$name,
-          breed: {
-            name: _$breed
-          }
-        },
-        // type: "POST",
-        contentType: 'Access-Control-Allow-Origin',
+          breed_id: 2
+        }),
+        type: "POST",
+        contentType: 'application/json',
         dataType: "json",
         success: function(json){
           console.log(json);
@@ -58,7 +55,8 @@ $(function() {
 
   $("input[type='submit']").on("click", function(e) {
      e.preventDefault();
-     puppiesAPI.registerPuppy();
+     puppiesAPI.registerPuppy() 
+     console.log(e)
   });
 
 });
