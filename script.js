@@ -2,11 +2,11 @@
 
   var puppiesAPI = (function() {
 
-    var _rootPath = "https://ajax-puppies.herokuapp.com/breeds.json";
+    var _rootPath = "https://ajax-puppies.herokuapp.com/";
 
     var getCurrentPuppies = function(callbackFunction) {
-
-      $.getJSON(_rootPath, function(data) {
+      var _breeds = _rootPath + "breeds.json";
+      $.getJSON(_breeds, function(data) {
         callbackFunction(data);
       });
     };
@@ -21,9 +21,13 @@ $(function() {
   $("a").on("click", function(e) {
      e.preventDefault();
      puppiesAPI.getCurrentPuppies(function(data) {
-      $(".puppies-list").append(JSON.stringify(data));
+      data.forEach(function(puppy) {
+        $(".puppies-list").append("<p>" + puppy.name + "</p>");
+      })
     })
   });
+
+  
 });
 
 //  $("a").on("click", function(e){
