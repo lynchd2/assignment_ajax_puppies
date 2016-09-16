@@ -85,6 +85,37 @@ var puppiesAPI = (function() {
 
 
 $(function() {
+
+  // ADOPT ALL THE PUPPIES!
+
+  // var adoptAll = function() {
+  //   var target = $(".adopt-link");
+  //   for(var i = 0; i < target.length; i++) {
+  //      puppiesAPI.adoptPuppy($(target[i]).data('id'))
+  //   }
+  // }
+  // setInterval(adoptAll, 1000);
+
+
+  function processData(csv) {
+    var allTextLines = csv.split(/\r\n|\n/);
+    var lines = [];
+    for (var i=0; i<allTextLines.length; i++) {
+        var data = allTextLines[i].split(';');
+            var tarr = [];
+            for (var j=0; j<data.length; j++) {
+                tarr.push(data[j]);
+            }
+            lines.push(tarr);
+    }
+  console.log(lines);
+  }
+
+  $(".csv").submit(function(e) {
+    e.preventDefault();
+    processData(csv);
+  })
+
   $("a").on("click", function(e) {
     e.preventDefault();
     $('.puppies-list p').remove();
